@@ -36,7 +36,7 @@ public class Repositories {
       List<PasswordHistory> fetchPassword(@Param("userId") String userId);
 
       @Query(
-         value = "SELECT * FROM sms_gateway.passwd_history WHERE user_id = :userId AND old_passwd = :newpass ORDER BY change_time DESC LIMIT 3",
+         value = "SELECT * FROM passwd_history WHERE user_id = :userId AND old_passwd = :newpass ORDER BY change_time DESC LIMIT 3",
          nativeQuery = true
       )
       List<PasswordHistory> fetchPasswordAndOldPasswd(@Param("userId") String userId, @Param("newpass") String newpass);
@@ -64,7 +64,7 @@ public class Repositories {
       @Transactional
       @Modifying
       @Query(
-         value = "UPDATE sms_gateway.user_master SET passwd=:passwd, passwd_exp=:passwdExp, auth_status='1' WHERE user_id = :userId",
+         value = "UPDATE user_master SET passwd=:passwd, passwd_exp=:passwdExp, auth_status='1' WHERE user_id = :userId",
          nativeQuery = true
       )
       int updatePasswordMaster(@Param("passwd") String passwd, @Param("passwdExp") Date passwdExp, @Param("userId") String userId);
@@ -72,7 +72,7 @@ public class Repositories {
       @Transactional
       @Modifying
       @Query(
-         value = "UPDATE sms_gateway.user_master SET logout_status=:logoutStatus, last_login_dt=:lastLoginDt WHERE user_id = :userId",
+         value = "UPDATE user_master SET logout_status=:logoutStatus, last_login_dt=:lastLoginDt WHERE user_id = :userId",
          nativeQuery = true
       )
       int updateLoginDetailsMaster(@Param("logoutStatus") String logoutStatus, @Param("lastLoginDt") Date lastLoginDt, @Param("userId") String userId);
@@ -80,7 +80,7 @@ public class Repositories {
       @Transactional
       @Modifying
       @Query(
-         value = "UPDATE sms_gateway.user_master SET logout_status=:logoutStatus, last_logout_date=:lastLogoutDate WHERE user_id = :userId",
+         value = "UPDATE user_master SET logout_status=:logoutStatus, last_logout_date=:lastLogoutDate WHERE user_id = :userId",
          nativeQuery = true
       )
       int updateLogOutDetailsMaster(@Param("logoutStatus") String logoutStatus, @Param("lastLogoutDate") Date lastLogoutDate, @Param("userId") String userId);
@@ -88,7 +88,7 @@ public class Repositories {
       @Transactional
       @Modifying
       @Query(
-         value = "UPDATE sms_gateway.user_master SET login_attempt=:loginAttempt, lock_time=:lockTime, last_login_dt=:lastLoginDt WHERE user_id = :userId",
+         value = "UPDATE user_master SET login_attempt=:loginAttempt, lock_time=:lockTime, last_login_dt=:lastLoginDt WHERE user_id = :userId",
          nativeQuery = true
       )
       int updateUnloackPeroid(@Param("loginAttempt") Integer loginAttempt, @Param("lockTime") Date lockTime, @Param("lastLoginDt") Date lastLoginDt, @Param("userId") String userId);
@@ -96,7 +96,7 @@ public class Repositories {
       @Transactional
       @Modifying
       @Query(
-         value = "UPDATE sms_gateway.user_master SET login_attempt=:loginAttempt, lock_time=:lockTime WHERE user_id = :userId",
+         value = "UPDATE user_master SET login_attempt=:loginAttempt, lock_time=:lockTime WHERE user_id = :userId",
          nativeQuery = true
       )
       int updateLockingPeroid(@Param("loginAttempt") Integer loginAttempt, @Param("lockTime") Date lockTime, @Param("userId") String userId);

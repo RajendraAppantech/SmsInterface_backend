@@ -1,62 +1,76 @@
 package com.sms.loginmodels;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sms.DateSerializer;
-import java.util.Date;
 
 @JsonIgnoreProperties
 public class UserData {
-   private String token;
-   @JsonSerialize(
-      using = DateSerializer.class
-   )
-   private Date lastLoginDate;
-   private String menu;
-   private String name;
-   private String username;
+	private String token;
+	@JsonSerialize(using = DateSerializer.class)
+	private Date lastLoginDate;
+	private String menu;
+	private String name;
+	private String username;
+	private String userRole;
 
-   public String getToken() {
-      return this.token;
-   }
+	public String getToken() {
+		return this.token;
+	}
 
-   public void setToken(String token) {
-      this.token = token;
-   }
+	public void setToken(String token) {
+		this.token = token;
+	}
 
-   public Date getLastLoginDate() {
-      return this.lastLoginDate;
-   }
+	public Date getLastLoginDate() {
+		return this.lastLoginDate;
+	}
 
-   public void setLastLoginDate(Date lastLoginDate) {
-      this.lastLoginDate = lastLoginDate;
-   }
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
 
-   public String getMenu() {
-      return this.menu;
-   }
+	public String getMenu() {
+		return this.menu;
+	}
 
-   public void setMenu(String menu) {
-      this.menu = menu;
-   }
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
 
-   public String getName() {
-      return this.name;
-   }
+	public String getName() {
+		return this.name;
+	}
 
-   public void setName(String name) {
-      this.name = name;
-   }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-   public String getUsername() {
-      return this.username;
-   }
+	public String getUsername() {
+		return this.username;
+	}
 
-   public void setUsername(String username) {
-      this.username = username;
-   }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-   public String toString() {
-      return "UserData [token=" + this.token + ", lastLoginDate=" + this.lastLoginDate + ", menu=" + this.menu + ", name=" + this.name + ", username=" + this.username + "]";
-   }
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+
+	@Override
+	public String toString() {
+		return "UserData [token=" + token + ", lastLoginDate=" + lastLoginDate + ", menu=" + menu + ", name=" + name
+				+ ", username=" + username + ", userRole=" + userRole + ", getToken()=" + getToken()
+				+ ", getLastLoginDate()=" + getLastLoginDate() + ", getMenu()=" + getMenu() + ", getName()=" + getName()
+				+ ", getUsername()=" + getUsername() + ", getUserRole()=" + getUserRole() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
 }
