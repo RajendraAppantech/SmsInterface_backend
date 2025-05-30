@@ -8,81 +8,67 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(
-   name = "user_menu"
-)
+@Table(name = "user_menu")
 public class UserMenu {
-   @Id
-   @GeneratedValue(
-      strategy = GenerationType.IDENTITY
-   )
-   @Column(
-      name = "menu_id",
-      nullable = false
-   )
-   private Long menuId;
-   @Column(
-      name = "user_role",
-      length = 30
-   )
-   private String userRole;
-   @Column(
-      name = "user_profile",
-      length = 30
-   )
-   private String userProfile;
-   @Column(
-      name = "menu",
-      length = 100
-   )
-   private String menu;
-   @Column(
-      name = "status",
-      length = 10
-   )
-   private String status;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "menu_id", nullable = false)
+	private Long menuId;
 
-   public Long getMenuId() {
-      return this.menuId;
-   }
+	@Column(name = "user_role", length = 30)
+	private String userRole;
 
-   public void setMenuId(Long menuId) {
-      this.menuId = menuId;
-   }
+	@Column(name = "user_profile", length = 30)
+	private String userProfile;
 
-   public String getUserRole() {
-      return this.userRole;
-   }
+	@Column(name = "menu", length = 100)
+	private String menu;
 
-   public void setUserRole(String userRole) {
-      this.userRole = userRole;
-   }
+	@Column(name = "status", length = 10)
+	private String status;
 
-   public String getMenu() {
-      return this.menu;
-   }
+	public Long getMenuId() {
+		return this.menuId;
+	}
 
-   public void setMenu(String menu) {
-      this.menu = menu;
-   }
+	public void setMenuId(Long menuId) {
+		this.menuId = menuId;
+	}
 
-   public String getStatus() {
-      return this.status;
-   }
+	public String getUserRole() {
+		return this.userRole;
+	}
 
-   public void setStatus(String status) {
-      this.status = status;
-   }
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
 
-   public String getUserProfile() {
-      return this.userProfile;
-   }
+	public String getMenu() {
+		return this.menu;
+	}
 
-   public void setUserProfile(String userProfile) {
-      this.userProfile = userProfile;
-   }
+	public void setMenu(String menu) {
+		this.menu = menu;
+	}
 
-   public String toString() {
-      return "UserMenu [menuId=" + this.menuId + ", userRole=" + this.userRole + ", userProfile=" + this.userProfile + ", menu=" + this.menu + ", status=" + this.status + "]";
-   }
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getUserProfile() {
+		return this.userProfile;
+	}
+
+	public void setUserProfile(String userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	public String toString() {
+		return "UserMenu [menuId=" + this.menuId + ", userRole=" + this.userRole + ", userProfile=" + this.userProfile
+				+ ", menu=" + this.menu + ", status=" + this.status + "]";
+	}
 }

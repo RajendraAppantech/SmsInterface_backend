@@ -6,11 +6,11 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -23,56 +23,88 @@ public class UserMaster {
 	@Id
 	@Column(name = "user_id", length = 50, nullable = false)
 	private String userId;
+	
 	@Column(name = "name", length = 200)
 	private String name;
+	
 	@Column(name = "mobile_no", length = 13)
 	private String mobileNo;
+	
 	@Column(name = "email_id", length = 30)
 	private String emailId;
+	
 	@Column(name = "user_role", length = 30)
 	private String userRole;
+	
 	@Column(name = "user_profile", length = 30)
 	private String userProfile;
+	
 	@Column(name = "status", length = 10)
 	private String status;
+	
 	@Column(name = "user_code")
 	private String userCode;
+	
 	@Column(name = "passwd", length = 64)
 	private String passwd;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "passwd_exp")
 	private Date passwdExp;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_login_dt")
 	private Date lastLoginDt;
+	
 	@Column(name = "login_attempt")
 	private Integer loginAttempt;
+	
 	@Column(name = "lock_time")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lockTime;
+	
 	@CreatedBy
 	@Column(name = "created_by", length = 100)
 	private String createdBy;
+	
 	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_dt")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDt;
+	
 	@LastModifiedBy
 	@Column(name = "modify_by", length = 100)
 	private String modifyBy;
+	
 	@LastModifiedDate
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "modify_dt")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyDt;
+	
 	@Column(name = "auth_by", length = 100)
 	private String authBy;
-	@Temporal(TemporalType.TIMESTAMP)
+	
 	@Column(name = "auth_dt")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date authDt;
+	
 	@Column(name = "auth_status", length = 10)
 	private String authStatus;
+	
 	@Column(name = "logout_status", length = 10)
 	private String logoutStatus;
-	@Temporal(TemporalType.TIMESTAMP)
+	
 	@Column(name = "last_logout_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = "Asia/Kolkata")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastLogoutDate;
+	
 	@Column(name = "user_menu", length = 100)
 	private String userMenu;
 
