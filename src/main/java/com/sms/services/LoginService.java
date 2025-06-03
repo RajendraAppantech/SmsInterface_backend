@@ -31,7 +31,7 @@ import com.sms.utils.DBUtils;
 public class LoginService {
 	@Autowired
 	private Repositories.UserMasterRepository masterRepository;
-	
+
 	@Value("${SMS_KEY}")
 	private String smsKey;
 
@@ -40,7 +40,7 @@ public class LoginService {
 
 	@Value("${USER_CODE}")
 	private String userCode;
-	
+
 	@Autowired
 	private DBUtils dbUtils;
 	@Autowired
@@ -51,12 +51,12 @@ public class LoginService {
 	private JwtUtil jwtUtil;
 	@Autowired
 	private MyUserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private SmsMasterRepository smsMasterRepository;
 
 	private static final Logger Logger = LoggerFactory.getLogger(LoginService.class);
-	
+
 	private static final ThreadLocal<SimpleDateFormat> rrnSuffixFormat = ThreadLocal
 			.withInitial(() -> new SimpleDateFormat("yyyyDDDHH"));
 	private static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -130,24 +130,23 @@ public class LoginService {
 								.loadUserByUsername(master.getUserId().toUpperCase());
 						String jwt = this.jwtUtil.generateToken(userDetails.getUsername());
 //						this.masterRepository.updateLoginDetailsMaster("N", new Date(), master.getUserId());
-						
-						/*UserData uData = new UserData();
-						uData.setName(master.getName());
-						uData.setUsername(master.getUserId());
-						uData.setMenu(master.getUserMenu());
-						uData.setToken("Bearer " + jwt);
-						uData.setLastLoginDate(lastLoginDt);
-						uData.setUserRole(master.getUserRole());
-						response.setData(uData);*/
-						
+
+						/*
+						 * UserData uData = new UserData(); uData.setName(master.getName());
+						 * uData.setUsername(master.getUserId()); uData.setMenu(master.getUserMenu());
+						 * uData.setToken("Bearer " + jwt); uData.setLastLoginDate(lastLoginDt);
+						 * uData.setUserRole(master.getUserRole()); response.setData(uData);
+						 */
+
 						String otp = generateOtp();
-						
+
 						String txnId = userCode + getTxnId();
 						SmsMaster sms = new SmsMaster();
 						sms.setMobileNo(master.getMobileNo());
 						sms.setUsername(userCode);
 						sms.setOtpDate(new Date());
-						sms.setSms("Dear user, your OTP for login is "+ otp + ". Do not share it with anyone. - Team Appantech");
+						sms.setSms("Dear user, your OTP for login is " + otp
+								+ ". Do not share it with anyone. - Team Appantech");
 						sms.setOtp(otp);
 						sms.setStatus("SEND");
 						sms.setSmsKey(smsKey);
@@ -157,11 +156,12 @@ public class LoginService {
 						sms.setSmsResponse("SMS send pending for proccess");
 						sms.setSendTxnId(txnId);
 						smsMasterRepository.save(sms);
-						
+
 						response.setStatus(true);
-						response.setMessage("OTP has been sent to your registered mobile number: "+ master.getMobileNo());
+						response.setMessage(
+								"OTP has been sent to your registered mobile number: " + master.getMobileNo());
 						response.setRespCode("00");
-						
+
 					}
 
 					return response;
@@ -200,7 +200,7 @@ public class LoginService {
 				response.setMessage("Invalid username and password.");
 				response.setRespCode("01");
 				return response;
-				
+
 			} else {
 				Logger.info("pass : " + pass);
 				Date lastLoginDt = master.getLastLoginDt();
@@ -223,41 +223,35 @@ public class LoginService {
 
 					return response;
 				} else {
-					
-					
-					
-					 // OTP validation block
-	                SmsMaster latestOtpRecord = smsMasterRepository
-	                    .findTopByMobileNoOrderByOtpDateDesc(master.getMobileNo());
 
-	                if (latestOtpRecord == null) {
-	                    response.setStatus(false);
-	                    response.setMessage("OTP not found. Please request a new OTP.");
-	                    response.setRespCode("04");
-	                    return response;
-	                }
-	                
-	                System.out.println("latestOtpRecord "+ latestOtpRecord.getOtp());
+					SmsMaster latestOtpRecord = smsMasterRepository.findTopByMobileNoOrderByOtpDateDesc(master.getMobileNo());
 
-	                // Check if OTP matches
-	                if (!req.getOtp().equals(latestOtpRecord.getOtp())) {
-	                    response.setStatus(false);
-	                    response.setMessage("Invalid OTP.");
-	                    response.setRespCode("05");
-	                    return response;
-	                }
+					if (latestOtpRecord == null) {
+						response.setStatus(false);
+						response.setMessage("OTP not found. Please request a new OTP.");
+						response.setRespCode("04");
+						return response;
+					}
 
-	                // Optionally check if OTP is expired (e.g., valid for 5 minutes)
-	                long otpAgeMillis = new Date().getTime() - latestOtpRecord.getOtpDate().getTime();
-	                long otpValidityMillis = 5 * 60 * 1000; // 5 minutes
-	                if (otpAgeMillis > otpValidityMillis) {
-	                    response.setStatus(false);
-	                    response.setMessage("OTP expired. Please request a new OTP.");
-	                    response.setRespCode("06");
-	                    return response;
-	                }
-		//---------------------
-					
+					System.out.println("latestOtpRecord " + latestOtpRecord.getOtp());
+
+					if (!req.getOtp().equals(latestOtpRecord.getOtp())) {
+						response.setStatus(false);
+						response.setMessage("Invalid OTP.");
+						response.setRespCode("05");
+						return response;
+					}
+
+					long otpAgeMillis = new Date().getTime() - latestOtpRecord.getOtpDate().getTime();
+					long otpValidityMillis = 5 * 60 * 1000;
+					if (otpAgeMillis > otpValidityMillis) {
+						response.setStatus(false);
+						response.setMessage("OTP expired. Please request a new OTP.");
+						response.setRespCode("06");
+						return response;
+					}
+					// ---------------------
+
 					count = this.dbUtils.getCount(master, "login");
 					if (count.startsWith("for")) {
 						response.setStatus(false);
@@ -293,7 +287,7 @@ public class LoginService {
 								.loadUserByUsername(master.getUserId().toUpperCase());
 						String jwt = this.jwtUtil.generateToken(userDetails.getUsername());
 						this.masterRepository.updateLoginDetailsMaster("N", new Date(), master.getUserId());
-						
+
 						UserData uData = new UserData();
 						uData.setName(master.getName());
 						uData.setUsername(master.getUserId());
@@ -302,9 +296,10 @@ public class LoginService {
 						uData.setLastLoginDate(lastLoginDt);
 						uData.setUserRole(master.getUserRole());
 						response.setData(uData);
-						
+
 					}
 
+					
 					return response;
 				}
 			}
@@ -316,5 +311,5 @@ public class LoginService {
 			response.setRespCode("EX");
 			return response;
 		}
-}
+	}
 }
