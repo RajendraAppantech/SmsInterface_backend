@@ -15,6 +15,7 @@ public class UserData {
 	private String name;
 	private String username;
 	private String userRole;
+	private String mobileNo;
 
 	public String getToken() {
 		return this.token;
@@ -62,6 +63,14 @@ public class UserData {
 
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 
 	@Override

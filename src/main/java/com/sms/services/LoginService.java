@@ -156,10 +156,12 @@ public class LoginService {
 						sms.setSmsResponse("SMS send pending for proccess");
 						sms.setSendTxnId(txnId);
 						smsMasterRepository.save(sms);
+						
+						UserData data = new UserData();
+						data.setMobileNo(master.getMobileNo());
 
 						response.setStatus(true);
-						response.setMessage(
-								"OTP has been sent to your registered mobile number: " + master.getMobileNo());
+						response.setMessage("OTP has been sent to your registered mobile number: " + master.getMobileNo());
 						response.setRespCode("00");
 
 					}
@@ -296,6 +298,11 @@ public class LoginService {
 						uData.setLastLoginDate(lastLoginDt);
 						uData.setUserRole(master.getUserRole());
 						response.setData(uData);
+						
+						// ✅ Set success status
+						response.setStatus(true);
+						response.setMessage("Login successful.");
+						response.setRespCode("00");
 
 					}
 
