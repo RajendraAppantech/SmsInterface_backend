@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sms.entity.SmsMaster;
 import com.sms.loginmodels.BankNameResponse;
 import com.sms.loginmodels.ForgotPasswordRequest;
+import com.sms.loginmodels.LoginInitiateRequest;
 import com.sms.loginmodels.LoginRequest;
 import com.sms.loginmodels.LoginResponse;
+import com.sms.loginmodels.LoginValidateRequest;
 import com.sms.loginmodels.MccCodeResponse;
 import com.sms.loginmodels.PincodeResponse;
 import com.sms.loginmodels.UpdatePasswordRequest;
@@ -57,6 +59,11 @@ public class SmsController {
 	@PostMapping({ "/login" })
 	public LoginResponse doLogin(@Valid @RequestBody LoginRequest req) {
 		return this.loginService.doLogin(req);
+	}
+	
+	@PostMapping("/login-validate")
+	public LoginResponse validateOtpLogin(@RequestBody LoginValidateRequest req) {
+		return loginService.validateOtpLogin(req);
 	}
 
 	@GetMapping({ "/getotp" })
