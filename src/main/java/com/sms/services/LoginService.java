@@ -163,6 +163,7 @@ public class LoginService {
 						response.setStatus(true);
 						response.setMessage("OTP has been sent to your registered mobile number: " + master.getMobileNo());
 						response.setRespCode("00");
+						response.setData(data);
 
 					}
 
