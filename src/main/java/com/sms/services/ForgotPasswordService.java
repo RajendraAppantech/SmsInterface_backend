@@ -1,21 +1,25 @@
 package com.sms.services;
 
-import com.google.common.base.Strings;
-import com.sms.entity.SmsMaster;
-import com.sms.entity.UserMaster;
-import com.sms.loginmodels.ForgotPasswordRequest;
-import com.sms.loginmodels.LoginResponse;
-import com.sms.repositories.Repositories;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.google.common.base.Strings;
+import com.sms.entity.OurSmsMaster;
+import com.sms.entity.SmsMaster;
+import com.sms.entity.UserMaster;
+import com.sms.loginmodels.ForgotPasswordRequest;
+import com.sms.loginmodels.LoginResponse;
+import com.sms.repositories.Repositories;
+import com.sms.repositories.Repositories.OurSmsMasterRepository;
 
 @Service
 public class ForgotPasswordService {
@@ -24,16 +28,25 @@ public class ForgotPasswordService {
       return new SimpleDateFormat("yyyyDDDHH");
    });
    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+   
    @Autowired
    private Repositories.UserMasterRepository masterRepository;
+   
    @Autowired
    private Repositories.SmsMasterRepository smsMasterRepository;
+   
    @Autowired
    Repositories.PasswordExpRepository passwordExpRepository;
+   
+   @Autowired
+   private OurSmsMasterRepository ourSmsMasterRepository;
+   
    @Value("${SMS_KEY}")
    private String smsKey;
+   
    @Value("${SMS_FROM}")
    private String smsFrom;
+   
    @Value("${USER_CODE}")
    private String userCode;
 
@@ -89,7 +102,7 @@ public class ForgotPasswordService {
       LoginResponse response = new LoginResponse();
 
       try {
-         SmsMaster master = this.smsMasterRepository.findTop1ByOrderBySmsidDesc();
+    	  OurSmsMaster master = this.ourSmsMasterRepository.findTop1ByOrderBySmsidDesc();
          if (master == null) {
             response.setStatus(false);
             response.setMessage("Record not found");

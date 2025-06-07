@@ -101,5 +101,7 @@ public class Repositories {
 	public interface OurSmsMasterRepository extends JpaRepository<OurSmsMaster, Long> {
 
 		OurSmsMaster findTopByMobileNoOrderByOtpDateDesc(String mobileNo);
+
+		OurSmsMaster findTop1ByOrderBySmsidDesc();
 	}
 }
