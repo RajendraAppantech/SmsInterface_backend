@@ -6,27 +6,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(
-   considerNestedRepositories = true
-)
+@EnableJpaRepositories(considerNestedRepositories = true)
 @EnableJpaAuditing
 public class SmsInterfaceApplication {
-   public static void main(String[] args) {
-      SpringApplication.run(SmsInterfaceApplication.class, args);
-      System.out.println("Server Start V1...");
-   }
+	public static void main(String[] args) {
+		SpringApplication.run(SmsInterfaceApplication.class, args);
+		System.out.println("Server Start V1...");
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

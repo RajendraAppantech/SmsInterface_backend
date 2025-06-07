@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sms.entity.BankNameMaster;
 import com.sms.entity.MccCodeMaster;
+import com.sms.entity.OurSmsMaster;
 import com.sms.entity.PasswordHistory;
 import com.sms.entity.PincodeMaster;
 import com.sms.entity.SmsMaster;
@@ -94,5 +95,10 @@ public class Repositories {
 
 	public interface UserMenuRepository extends JpaRepository<UserMenu, Long> {
 		UserMenu findByUserRole(String userRole);
+	}
+	
+	public interface OurSmsMasterRepository extends JpaRepository<OurSmsMaster, Long> {
+
+		OurSmsMaster findTopByMobileNoOrderByOtpDateDesc(String mobileNo);
 	}
 }

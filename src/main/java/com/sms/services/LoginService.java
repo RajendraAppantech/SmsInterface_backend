@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.sms.entity.OurSmsMaster;
 import com.sms.entity.SmsMaster;
 import com.sms.entity.UserMaster;
 import com.sms.jwt.JwtUtil;
@@ -23,6 +24,7 @@ import com.sms.loginmodels.LoginResponse;
 import com.sms.loginmodels.LoginValidateRequest;
 import com.sms.loginmodels.UserData;
 import com.sms.repositories.Repositories;
+import com.sms.repositories.Repositories.OurSmsMasterRepository;
 import com.sms.repositories.Repositories.SmsMasterRepository;
 import com.sms.utils.CommonUtils;
 import com.sms.utils.DBUtils;
@@ -43,17 +45,24 @@ public class LoginService {
 
 	@Autowired
 	private DBUtils dbUtils;
+
 	@Autowired
 	private CommonUtils commonUtils;
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
+
 	@Autowired
 	private JwtUtil jwtUtil;
+
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 
 	@Autowired
 	private SmsMasterRepository smsMasterRepository;
+
+	@Autowired
+	private OurSmsMasterRepository ourSmsMasterRepository;
 
 	private static final Logger Logger = LoggerFactory.getLogger(LoginService.class);
 
@@ -141,27 +150,29 @@ public class LoginService {
 						String otp = generateOtp();
 
 						String txnId = userCode + getTxnId();
-						SmsMaster sms = new SmsMaster();
+
+						OurSmsMaster sms = new OurSmsMaster();
 						sms.setMobileNo(master.getMobileNo());
 						sms.setUsername(userCode);
 						sms.setOtpDate(new Date());
-						sms.setSms("Dear user, your OTP for login is " + otp
-								+ ". Do not share it with anyone. - Team Appantech");
+						sms.setSms("Dear User, your OTP for login is " + otp
+								+ ". Do not share it with anyone - Appan Dukan");
 						sms.setOtp(otp);
-						sms.setStatus("SEND");
-						sms.setSmsKey(smsKey);
-						sms.setSmsFrom(smsFrom);
-						sms.setTemplateId("1707172992507471784");
+						sms.setStatus("P");
+						sms.setSmsKey("");
+						sms.setSmsFrom("ADMSPP");
+						sms.setTemplateId("1707174893247219928");
 						sms.setEntityId("1201160819143415278");
 						sms.setSmsResponse("SMS send pending for proccess");
 						sms.setSendTxnId(txnId);
-						smsMasterRepository.save(sms);
-						
+						ourSmsMasterRepository.save(sms);
+
 						UserData data = new UserData();
 						data.setMobileNo(master.getMobileNo());
 
 						response.setStatus(true);
-						response.setMessage("OTP has been sent to your registered mobile number: " + master.getMobileNo());
+						response.setMessage(
+								"OTP has been sent to your registered mobile number: " + master.getMobileNo());
 						response.setRespCode("00");
 						response.setData(data);
 
@@ -227,7 +238,8 @@ public class LoginService {
 					return response;
 				} else {
 
-					SmsMaster latestOtpRecord = smsMasterRepository.findTopByMobileNoOrderByOtpDateDesc(master.getMobileNo());
+					OurSmsMaster latestOtpRecord = ourSmsMasterRepository
+							.findTopByMobileNoOrderByOtpDateDesc(master.getMobileNo());
 
 					if (latestOtpRecord == null) {
 						response.setStatus(false);
@@ -299,7 +311,7 @@ public class LoginService {
 						uData.setLastLoginDate(lastLoginDt);
 						uData.setUserRole(master.getUserRole());
 						response.setData(uData);
-						
+
 						// ✅ Set success status
 						response.setStatus(true);
 						response.setMessage("Login successful.");
@@ -307,7 +319,6 @@ public class LoginService {
 
 					}
 
-					
 					return response;
 				}
 			}

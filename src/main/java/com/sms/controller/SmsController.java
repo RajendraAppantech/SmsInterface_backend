@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sms.entity.SmsMaster;
 import com.sms.loginmodels.BankNameResponse;
 import com.sms.loginmodels.ForgotPasswordRequest;
-import com.sms.loginmodels.LoginInitiateRequest;
 import com.sms.loginmodels.LoginRequest;
 import com.sms.loginmodels.LoginResponse;
 import com.sms.loginmodels.LoginValidateRequest;
