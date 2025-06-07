@@ -39,6 +39,7 @@ public class Repositories {
 		List<PasswordHistory> fetchPasswordAndOldPasswd(@Param("userId") String userId,
 				@Param("newpass") String newpass);
 	}
+	
 
 	public interface PincodeMasterRepository extends JpaRepository<PincodeMaster, String> {
 		List<PincodeMaster> findByPinCode(String pincode);
