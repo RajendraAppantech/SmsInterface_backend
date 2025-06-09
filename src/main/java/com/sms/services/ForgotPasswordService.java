@@ -69,7 +69,9 @@ public class ForgotPasswordService {
          } else {
             String txnId = this.userCode + this.getTxnId();
             String otp = this.genrateOTP();
-            SmsMaster sms = new SmsMaster();
+            
+            
+        /*    SmsMaster sms = new SmsMaster();
             sms.setMobileNo(master.getMobileNo());
             sms.setUsername(this.userCode);
             sms.setOtp(otp);
@@ -82,7 +84,25 @@ public class ForgotPasswordService {
             sms.setEntityId("1201160819143415278");
             sms.setSmsResponse("SMS send pending for proccess");
             sms.setSendTxnId(txnId);
-            this.smsMasterRepository.save(sms);
+            this.smsMasterRepository.save(sms);*/
+            
+            
+            OurSmsMaster sms = new OurSmsMaster();
+			sms.setMobileNo(master.getMobileNo());
+			sms.setUsername(userCode);
+			sms.setOtp(otp);
+			sms.setOtpDate(new Date());
+			sms.setSms("Dear User, OTP for forgot password is " + otp + ". OTP is valid for 5 mins - Appan Dukan");
+			sms.setStatus("P");
+			sms.setSmsKey("");
+			sms.setSmsFrom("ADMSPP");
+			sms.setTemplateId("1707174892970824300");
+			sms.setEntityId("1201160819143415278");
+			sms.setSmsResponse("SMS send pending for proccess");
+			sms.setSendTxnId(txnId);
+			ourSmsMasterRepository.save(sms);
+            
+            
             response.setStatus(true);
             response.setMessage("OTP successfully sent on your registered mobile no : XXXXXX" + master.getMobileNo().substring(6, 10));
             response.setRespCode("00");
@@ -135,7 +155,7 @@ public class ForgotPasswordService {
                response.setRespCode("01");
                return response;
             } else {
-               SmsMaster ms = this.smsMasterRepository.findByMobileNoAndOtp(master.getMobileNo(), req.getOtp());
+               OurSmsMaster ms = this.ourSmsMasterRepository.findByMobileNoAndOtp(master.getMobileNo(), req.getOtp());
                if (ms == null) {
                   response.setStatus(false);
                   response.setMessage("WRONG OTP");

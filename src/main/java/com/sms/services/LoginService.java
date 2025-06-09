@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.sms.entity.OurSmsMaster;
-import com.sms.entity.SmsMaster;
 import com.sms.entity.UserMaster;
 import com.sms.jwt.JwtUtil;
 import com.sms.jwt.MyUserDetailsService;
@@ -25,7 +24,6 @@ import com.sms.loginmodels.LoginValidateRequest;
 import com.sms.loginmodels.UserData;
 import com.sms.repositories.Repositories;
 import com.sms.repositories.Repositories.OurSmsMasterRepository;
-import com.sms.repositories.Repositories.SmsMasterRepository;
 import com.sms.utils.CommonUtils;
 import com.sms.utils.DBUtils;
 
@@ -57,9 +55,6 @@ public class LoginService {
 
 	@Autowired
 	private MyUserDetailsService userDetailsService;
-
-	@Autowired
-	private SmsMasterRepository smsMasterRepository;
 
 	@Autowired
 	private OurSmsMasterRepository ourSmsMasterRepository;
@@ -235,7 +230,6 @@ public class LoginService {
 						response.setRespCode("03");
 					}
 
-					
 					return response;
 				} else {
 

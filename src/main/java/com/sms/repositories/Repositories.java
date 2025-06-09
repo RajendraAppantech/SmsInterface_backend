@@ -103,5 +103,7 @@ public class Repositories {
 		OurSmsMaster findTopByMobileNoOrderByOtpDateDesc(String mobileNo);
 
 		OurSmsMaster findTop1ByOrderBySmsidDesc();
+
+		OurSmsMaster findByMobileNoAndOtp(String mobileNo, String otp);
 	}
 }
