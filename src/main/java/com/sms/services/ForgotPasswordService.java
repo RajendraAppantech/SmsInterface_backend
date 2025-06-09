@@ -49,6 +49,9 @@ public class ForgotPasswordService {
    
    @Value("${USER_CODE}")
    private String userCode;
+   
+   @Value("${sms.dlt.telemarketer.id}")
+   private String dltTelemarketerId;
 
    public LoginResponse forgotPassword(ForgotPasswordRequest req) {
       logger.info("\r\n\r\n**************************** Forgot Passoword *************************************");
@@ -70,23 +73,6 @@ public class ForgotPasswordService {
             String txnId = this.userCode + this.getTxnId();
             String otp = this.genrateOTP();
             
-            
-        /*    SmsMaster sms = new SmsMaster();
-            sms.setMobileNo(master.getMobileNo());
-            sms.setUsername(this.userCode);
-            sms.setOtp(otp);
-            sms.setOtpDate(new Date());
-            sms.setSms("Dear User, OTP for forgot password is " + otp + ". OTP is valid for 5 mins - Appan Dukan");
-            sms.setStatus("P");
-            sms.setSmsKey(this.smsKey);
-            sms.setSmsFrom(this.smsFrom);
-            sms.setTemplateId("1707172890839255029");
-            sms.setEntityId("1201160819143415278");
-            sms.setSmsResponse("SMS send pending for proccess");
-            sms.setSendTxnId(txnId);
-            this.smsMasterRepository.save(sms);*/
-            
-            
             OurSmsMaster sms = new OurSmsMaster();
 			sms.setMobileNo(master.getMobileNo());
 			sms.setUsername(userCode);
@@ -100,6 +86,7 @@ public class ForgotPasswordService {
 			sms.setEntityId("1201160819143415278");
 			sms.setSmsResponse("SMS send pending for proccess");
 			sms.setSendTxnId(txnId);
+			sms.setDlttelemarketerId(dltTelemarketerId);
 			ourSmsMasterRepository.save(sms);
             
             

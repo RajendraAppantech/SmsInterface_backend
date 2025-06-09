@@ -40,6 +40,9 @@ public class LoginService {
 
 	@Value("${USER_CODE}")
 	private String userCode;
+	
+	@Value("${sms.dlt.telemarketer.id}")
+	private String dltTelemarketerId;
 
 	@Autowired
 	private DBUtils dbUtils;
@@ -160,6 +163,7 @@ public class LoginService {
 						sms.setEntityId("1201160819143415278");
 						sms.setSmsResponse("SMS send pending for proccess");
 						sms.setSendTxnId(txnId);
+						sms.setDlttelemarketerId(dltTelemarketerId);
 						ourSmsMasterRepository.save(sms);
 
 						UserData data = new UserData();

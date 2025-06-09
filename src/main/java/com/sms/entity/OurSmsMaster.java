@@ -80,6 +80,9 @@ public class OurSmsMaster {
 	@Column(name = "header_id", length = 100)
 	private String headerId;
 
+	@Column(name = "dlttelemarketer_id", length = 100)
+	private String dlttelemarketerId;
+
 	// Getters and Setters
 
 	public Long getSmsid() {
@@ -233,4 +236,13 @@ public class OurSmsMaster {
 	public void setHeaderId(String headerId) {
 		this.headerId = headerId;
 	}
+
+	public String getDlttelemarketerId() {
+		return dlttelemarketerId;
+	}
+
+	public void setDlttelemarketerId(String dlttelemarketerId) {
+		this.dlttelemarketerId = dlttelemarketerId;
+	}
+
 }
